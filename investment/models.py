@@ -1,39 +1,39 @@
 #-*- coding: utf-8 -*-
 
 from django.db import models
-from django.utils import timezone
+from datetime import datetime
 
 class Objective(models.Model):
     text = models.CharField(max_length=400)
     post_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
-        self.post_date = timezone.now()
+        self.post_date = datetime.now()
         self.save
 
     def __str__(self):
         return self.text
 
 class Blog(models.Model):
-    INVESTMENT = "투자"
-    COMPANY = "회사"
-    HOME = "가정"
-    OTHER = "기타"
+    INVESTMENT = 'INVESTMENT'
+    COMPANY = 'COMPANY'
+    HOME = 'HOME'
+    OTHER = 'OTHER'
     CATEGORY_CHOICES = (
-        (INVESTMENT, "투자"),
-        (COMPANY, "회사"),
-        (HOME, "가정"),
-        (OTHER, "기타"),
+        (INVESTMENT, '투자'),
+        (COMPANY, '회사'),
+        (HOME, '가정'),
+        (OTHER, '기타'),
     )
 
-    post_date = models.DateTimeField(default=timezone.now)
+    post_date = models.DateTimeField(default=datetime.now())
     edit_date = models.DateTimeField(null=True, blank=True)
     category = models.CharField(max_length=200, choices = CATEGORY_CHOICES, default=INVESTMENT)
     title = models.CharField(max_length=200)
     text = models.TextField()
 
     def publish(self):
-        self.post_date = timezone.now
+        self.post_date = datetime.now()
         self.save()
 
     def __str__(self):

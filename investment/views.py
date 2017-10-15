@@ -4,7 +4,7 @@ from django.shortcuts import render
 from .models import StockMarketItem, Objective, Phase, Blog
 from .forms import StockForm, BlogForm
 from django.shortcuts import redirect
-from datetime
+from datetime import datetime
 
 def home(request):
     posts = Blog.objects.order_by('-post_date')[:3]
@@ -33,7 +33,7 @@ def blog_new(request):
         if form.is_valid():
             blog = form.save(commit=False)
             blog.category = blog.category.encode('utf-8')
-            blog.publish_date = datetime.datetime.now()
+            blog.publish_date = datetime.now()
             blog.save()
             return redirect('blogs')
     else:
