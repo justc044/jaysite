@@ -1,0 +1,11 @@
+{% extends 'investment/base.html' %}
+
+{% block content %}
+    <h3>New Stock Entry</h3>
+    <br>
+    <form method="POST" class="stock-form">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

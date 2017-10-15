@@ -1,0 +1,9 @@
+{% extends 'investment/base.html' %}
+
+{% block content %}
+    <div class="stock">
+        <a class="btn btn-default" href="{% url 'invest_edit' pk=stock.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <h1>{{ stock.name }}</h1>
+        <p>{{ stock.description|linebreaksbr }}</p>
+    </div>
+{% endblock %}
