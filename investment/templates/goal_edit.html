@@ -4,33 +4,25 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>About Me</title>
+    <title>Goals</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link href="../static/css/about.css" rel="stylesheet">
   </head>
   <body>
-    <div class="card w-75 text-center">
-      <div class="card-body">
-        <img src="../static/profile.jpg" class="rounded float-left">
-        <br>
-        <h5 class="card-title">JAY JEON</h5>
-        <p class="card-text">
-          Business Strategy<br>
-          Investor<br>
-        </p>
-      </div>
-    </div>
 
-    <div class="container">
-      <img src="../static/profile.jpg" class="rounded float-left">
-      Jay Jaean Jeon<br>
-    </div>
+    <h3>New Goal</h3>
+    <br>
+    <form method="POST" class="goal-form">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" class="save btn btn-default">Save</button>
+    </form>
 
     <footer class="footer">
       <div class="container">
         <span class="text-muted">
-            <a href="../">Home</a>
+            <a href="../../">Home</a>
+            <a href="../../goals">Goals</a>
         </span>
       </div>
     </footer>

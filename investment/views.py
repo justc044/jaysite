@@ -1,10 +1,11 @@
 #-*- coding: utf-8 -*-
 
-from django.shortcuts import render
-from .models import StockMarketItem, Objective, Phase, Blog
-from .forms import StockForm, BlogForm
+from django.shortcuts import render, get_object_or_404
+from .models import StockMarketItem, Objective, Phase, Blog, Goal
+from .forms import StockForm, BlogForm, GoalForm
 from django.shortcuts import redirect
 from datetime import datetime
+from django.http import Http404
 
 def home(request):
     posts = Blog.objects.order_by('-post_date')[:3]
@@ -27,6 +28,34 @@ def blog_list(request, id):
         raise Http404("Something's wrong with the post")
     return render(request, 'blog.html', {'post': post})
 
+def blog_edit(request, id):
+    post = get_object_or_404(Blog, id=id)
+    if request.method == "POST":
+        form = BlogForm(request.POST, instance=post)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.category = blog.category.encode('utf-8')
+            blog.edit_date = datetime.now()
+            blog.save()
+            return redirect('blog_list', id=post.id)
+    else:
+        form = BlogForm(instance=post)
+    return render(request, 'blog_edit.html', {'form': form})
+
+def blog_remove(request, id):
+    try:
+        Blog.objects.get(pk=id).delete()
+    except Objective.DoesNotExist:
+        raise Http404("Post cannot be removed")
+    return redirect('blogs')
+
+def goals(request):
+    try:
+        goals = Goal.objects.all()
+    except Objective.DoesNotExist:
+        raise Http404("No goal exists")
+    return render(request, 'goals.html', {'goals': goals})
+
 def blog_new(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
@@ -39,6 +68,18 @@ def blog_new(request):
     else:
         form = BlogForm()
     return render(request, 'blog_edit.html', {'form': form})
+
+def goal_new(request):
+    if request.method == "POST":
+        form = GoalForm(request.POST)
+        if form.is_valid():
+            goal = form.save(commit=False)
+            goal.publish_date = datetime.now()
+            goal.save()
+            return redirect('goals')
+    else:
+        form = GoalForm()
+    return render(request, 'goal_edit.html', {'goal': goals})
 
 def invest_list(request):
     stockitems = StockMarketItem.objects.all()
@@ -74,5 +115,5 @@ def invest_edit(request, pk):
             stock.save()
             return redirect('invest_detail', pk=stock.pk)
     else:
-        form = StockForm(instance=post)
+        form = StockForm(instance=stock)
     return render(request, 'blog/invest_edit.html', {'form': form})

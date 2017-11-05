@@ -2,17 +2,34 @@
 
 from django.db import models
 from datetime import datetime
+from django.utils import timezone
 
 class Objective(models.Model):
     text = models.CharField(max_length=400)
     post_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
-        self.post_date = datetime.now()
+        #self.post_date = datetime.now()
+        self.post_date = timezone.now()
         self.save
 
     def __str__(self):
         return self.text
+
+class Goal(models.Model):
+    post_date = models.DateTimeField(default=datetime.now())
+    edit_date = models.DateTimeField(null=True, blank=True)
+    goal_date = models.DateTimeField(null=True, blank=True)
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+
+    def publish(self):
+        #self.post_date = datetime.now()
+        self.post_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
 
 class Blog(models.Model):
     INVESTMENT = 'INVESTMENT'
@@ -33,7 +50,8 @@ class Blog(models.Model):
     text = models.TextField()
 
     def publish(self):
-        self.post_date = datetime.now()
+        #self.post_date = datetime.now()
+        self.post_date = timezone.now()
         self.save()
 
     def __str__(self):

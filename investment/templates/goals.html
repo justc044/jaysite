@@ -11,23 +11,19 @@
   </head>
   <body>
 
-  {% for post in posts %}
+    {% for goal in goals %}
 
-  <p>[{{ post.category }}]</p>
-  <h4>{{ post.title }}</h4>
-  <p>{{ post.post_date }}</p>
-  <p>{{ post.text }}</p>
-  <a href="../blog/edit/{{ post.id }}">Edit</a>
-  <a href="../blog/remove/{{ post.id }}">Remove</a>
-  <br><br>
+  <h4>{{ goal.title }}</h4>
+  <p>{{ goal.post_date }}</p>
+  <p>{{ goal.text }}</p>
 
-  {% endfor %}
+    {% endfor %}
 
     <footer class="footer">
         <div class="container">
           <span class="text-muted">
-              <a href="../">Home</a>
-              <a href="../blog/new">New</a>
+              <a href="../../">Home</a>
+              <a href="../goal/new">New</a>
           </span>
        </div>
     </footer>
